@@ -1,2 +1,2 @@
-# exquisitus-c-adaveris
+# Exquisitus (C)adaveris
 Mmmmmmmmmhhhh délicieux ce cadavre
