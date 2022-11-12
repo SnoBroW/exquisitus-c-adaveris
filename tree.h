@@ -5,30 +5,22 @@
 #ifndef EXQUISITUS_C_ADAVERIS_TREE_H
 #define EXQUISITUS_C_ADAVERIS_TREE_H
 
-typedef struct Cell Cell;
-typedef struct List List;
-typedef struct Node Node;
-typedef struct Tree Tree;
+#include "list.h"
 
-typedef struct Cell {
-    Node * data;
-    struct Cell * next;
-} Cell;
-
-typedef struct List {
-    Cell * head;
-} List;
 
 typedef struct Node {
     char data;
-    List children;
+    struct List * children;
 } Node;
 
 typedef struct Tree {
-    Node *root;
+    struct Node *root;
 } Tree;
 
-
+Tree * createTree();
+Node * createNode(char data);
+void addNode(Node * parent, Node * child);
+void printTree(Node * node);
 
 
 

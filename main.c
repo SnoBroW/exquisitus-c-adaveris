@@ -7,57 +7,32 @@
 #include <string.h>
 
 #include "tree.h"
+#include "list.h"
 
 
-List * createList() {
-    List * list = malloc(sizeof(List));
-    list->head = NULL;
-    return list;
-}
-
-Tree * createTree() {
-    Tree * tree = malloc(sizeof(Tree));
-    tree->root = NULL;
-    return tree;
-}
-
-Node * createNode(char data) {
-    Node * node = malloc(sizeof(Node));
-    node->data = data;
-    node->children = *createList();
-    return node;
-}
-
-void freeList(List * list) {
-    Cell * current = list->head;
-    while (current != NULL) {
-        Cell * next = current->next;
-        free(current);
-        current = next;
-    }
-    free(list);
-}
-
-void freeNode(Node * node) {
-    freeList(&node->children);
-    free(node);
-}
-
-void freeTree(Tree * tree) {
-    freeNode(tree->root);
-    free(tree);
-}
 
 
-int main() {
+int main(int argc, char *argv[]) {
 
-    char word[] = "toilet";
+    char toilet[] = "toilet";
+    char toiture[] = "toiture";
 
     Tree * tree = createTree();
-    List * list = createList();
+    Node * temp = NULL;
 
-    freeList(list);
-    freeTree(tree);
+    for(int i = 0; i < strlen(toilet); i++) {
+        Node * node = createNode(toilet[i]);
+        if (tree->root == NULL) {
+            tree->root = node;
+            temp = node;
+        } else {
+            addNode(temp, node);
+            temp = node;
+        }
+    }
+
+    printTree(tree->root);
+
 
     return 0;
 }
