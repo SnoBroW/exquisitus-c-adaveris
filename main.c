@@ -14,32 +14,15 @@
 
 int main(int argc, char *argv[]) {
 
-    char toilet[] = "toilet";
-    char toiture[] = "toiture";
-
     Tree * tree = createTree();
-    Node * temp = tree->root;
 
-    for(int i = 0; i < strlen(toilet); i++) {
-        if(!isInList(temp->children, toilet[i])) {
-            Node * node = createNode(toilet[i]);
-            addNode(temp, node);
-            temp = node;
-        } else {
-            temp = temp->children->head->node;
-        }
-    }
-
-    temp = tree->root;
-
-    for(int i = 0; i < strlen(toiture); i++) {
-        if(!isInList(temp->children, toiture[i])) {
-            Node * node = createNode(toiture[i]);
-            addNode(temp, node);
-            temp = node;
-        } else {
-            temp = temp->children->head->node;
-        }
+    FILE * file = fopen("../dico_10_lignes.txt", "r");
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        char * word = strtok(line, "\t");
+        word = strtok(NULL, "\t");
+        printf("%s\n", word);
+        addWord(tree, word);
     }
 
 

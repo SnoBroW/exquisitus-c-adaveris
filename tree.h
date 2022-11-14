@@ -25,9 +25,10 @@ typedef struct Derivative {
 Tree * createTree();
 Node * createNode(char data);
 void addNode(Node * parent, Node * child);
+void addWord(Tree * tree, char * word);
+
 void printTree(Node * node);
 void printTreeParenthese(Node * node);
-
 
 
 

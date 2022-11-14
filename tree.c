@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "list.h"
 #include "tree.h"
@@ -35,22 +36,46 @@ void addNode(Node * parent, Node * child) {
     }
 }
 
-// cette fonction ne sert à rien
-void printTree(Node * node) {
-    printf("%c", node->data);
-    Nodecell * head = node->children->head;
-    while(head != NULL) {
-        printTree(head->node);
-        head = head->next;
+void addWord(Tree * tree, char * word) {
+    Node * temp = tree->root;
+
+    for(int i = 0; i < strlen(word); i++) {
+        if(!isInList(temp->children, word[i])) {
+            Node * node = createNode(word[i]);
+            addNode(temp, node);
+            temp = node;
+        } else {
+            temp = temp->children->head->node;
+        }
     }
 }
 
-// cette fonction sert un peu moins à rien
+
+void printTree(Node * node) {
+    Nodecell * temp = node->children->head;
+    while (temp != NULL) {
+        printf("%c ", temp->node->data);
+        printTree(temp->node);
+        if (temp->next != NULL) {
+            printf("\t");
+        }
+        temp = temp->next;
+    }
+
+}
+
+
 void printTreeParenthese(Node * node) {
-    printf("%c", node->data);
-    Cell * temp = node->children->head;
+    if(node->data != ' ') {
+        printf("%c", node->data);
+    }
+    int doBracket = 0;
+    Nodecell * temp = node->children->head;
     if (temp != NULL) {
-        printf("[");
+        if (temp->next != NULL) {
+            doBracket = 1;
+            printf("[");
+        }
         while (temp != NULL) {
             printTreeParenthese(temp->node);
             temp = temp->next;
@@ -58,6 +83,8 @@ void printTreeParenthese(Node * node) {
                 printf(", ");
             }
         }
-        printf("]");
+        if (doBracket) {
+            printf("]");
+        }
     }
 }
