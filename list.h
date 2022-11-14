@@ -5,23 +5,31 @@
 #ifndef EXQUISITUS_C_ADAVERIS_LIST_H
 #define EXQUISITUS_C_ADAVERIS_LIST_H
 
+#include <stdbool.h>
+
 #include "tree.h"
 
 
-typedef struct Cell {
+typedef struct Nodecell {
     struct Node * node;
-    struct Cell * next;
-} Cell;
+    struct Nodecell * next;
+} Nodecell;
 
-typedef struct List {
-    struct Cell * head;
-} List;
+typedef struct Nodelist {
+    struct Nodecell * head;
+} Nodelist;
 
+typedef struct Derivativecell {
+    struct Derivative * derivative;
+    struct Derivativecell * next;
+} DerivativeCell;
 
-List * createList();
-Cell * createCell(struct Node * node);
-void addToList(struct List * list, struct Cell * cell);
+typedef struct Derivativelist {
+    struct Derivativecell * head;
+} DerivativeList;
 
-
+Nodelist * createList();
+Nodecell * createCell(struct Node * node);
+bool isInList(Nodelist * nodelist, char data);
 
 #endif //EXQUISITUS_C_ADAVERIS_LIST_H

@@ -18,20 +18,32 @@ int main(int argc, char *argv[]) {
     char toiture[] = "toiture";
 
     Tree * tree = createTree();
-    Node * temp = NULL;
+    Node * temp = tree->root;
 
     for(int i = 0; i < strlen(toilet); i++) {
-        Node * node = createNode(toilet[i]);
-        if (tree->root == NULL) {
-            tree->root = node;
-            temp = node;
-        } else {
+        if(!isInList(temp->children, toilet[i])) {
+            Node * node = createNode(toilet[i]);
             addNode(temp, node);
             temp = node;
+        } else {
+            temp = temp->children->head->node;
         }
     }
 
-    printTree(tree->root);
+    temp = tree->root;
+
+    for(int i = 0; i < strlen(toiture); i++) {
+        if(!isInList(temp->children, toiture[i])) {
+            Node * node = createNode(toiture[i]);
+            addNode(temp, node);
+            temp = node;
+        } else {
+            temp = temp->children->head->node;
+        }
+    }
+
+
+    printTreeParenthese(tree->root);
 
 
     return 0;

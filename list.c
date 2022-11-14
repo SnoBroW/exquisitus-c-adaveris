@@ -3,34 +3,32 @@
 //
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "list.h"
 #include "tree.h"
 
-List * createList() {
-    List * list = malloc(sizeof(List));
+struct Nodelist * createList() {
+    struct Nodelist * list = malloc(sizeof(struct Nodelist));
     list->head = NULL;
     return list;
 }
 
-Cell * createCell(Node * node) {
-    Cell * cell = malloc(sizeof(Cell));
+struct Nodecell * createCell(Node * node) {
+    struct Nodecell * cell = malloc(sizeof(struct Nodecell));
     cell->node = node;
     cell->next = NULL;
     return cell;
 }
 
-void addToList(List * list, Cell * cell){
-    int i = 0;
-    Cell * head = list->head;
-    if(head == NULL) {
-        list->head = cell;
-        i++;
-    } else {
-        while(head->next != NULL) {
-            i++;
-            head = head->next;
+// check if a char is in a list of nodes
+bool isInList(Nodelist * nodelist, char data) {
+    Nodecell * head = nodelist->head;
+    while(head != NULL) {
+        if(head->node->data == data) {
+            return true;
         }
-        head->next = cell;
+        head = head->next;
     }
+    return false;
 }

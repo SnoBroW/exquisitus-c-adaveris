@@ -10,17 +10,23 @@
 
 typedef struct Node {
     char data;
-    struct List * children;
+    struct Nodelist * children;
+    struct DerivativeList * derivatives;
 } Node;
 
 typedef struct Tree {
     struct Node *root;
 } Tree;
 
+typedef struct Derivative {
+    // rien sa mère
+} Derivative;
+
 Tree * createTree();
 Node * createNode(char data);
 void addNode(Node * parent, Node * child);
 void printTree(Node * node);
+void printTreeParenthese(Node * node);
 
 
 
