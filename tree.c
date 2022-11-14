@@ -38,6 +38,7 @@ void addNode(Node * parent, Node * child) {
 
 void addWord(Tree * tree, char * word) {
     Node * temp = tree->root;
+    Nodecell * tempNodelist = temp->children->head;
 
     for(int i = 0; i < strlen(word); i++) {
         if(!isInList(temp->children, word[i])) {
@@ -45,7 +46,11 @@ void addWord(Tree * tree, char * word) {
             addNode(temp, node);
             temp = node;
         } else {
-            temp = temp->children->head->node;
+            while(tempNodelist->node->data != word[i]) {
+                tempNodelist = tempNodelist->next;
+            }
+            temp = tempNodelist->node;
+            tempNodelist = temp->children->head;
         }
     }
 }

@@ -16,12 +16,11 @@ int main(int argc, char *argv[]) {
 
     Tree * tree = createTree();
 
-    FILE * file = fopen("../dico_10_lignes.txt", "r");
+    FILE * file = fopen("../dictionnaire_non_accentue.txt", "r");
     char line[256];
     while (fgets(line, sizeof(line), file)) {
         char * word = strtok(line, "\t");
         word = strtok(NULL, "\t");
-        printf("%s\n", word);
         addWord(tree, word);
     }
 
