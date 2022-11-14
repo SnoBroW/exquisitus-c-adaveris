@@ -8,28 +8,33 @@
 #include <stdbool.h>
 
 #include "tree.h"
+#include "derivative.h"
 
 
-typedef struct Nodecell {
+typedef struct NodeCell {
     struct Node * node;
-    struct Nodecell * next;
-} Nodecell;
+    struct NodeCell * next;
+} NodeCell;
 
-typedef struct Nodelist {
-    struct Nodecell * head;
-} Nodelist;
+typedef struct NodeList {
+    struct NodeCell * head;
+} NodeList;
 
-typedef struct Derivativecell {
+typedef struct DerivativeCell {
     struct Derivative * derivative;
-    struct Derivativecell * next;
+    struct DerivativeCell * next;
 } DerivativeCell;
 
-typedef struct Derivativelist {
-    struct Derivativecell * head;
+typedef struct DerivativeList {
+    struct DerivativeCell * head;
 } DerivativeList;
 
-Nodelist * createList();
-Nodecell * createCell(struct Node * node);
-bool isInList(Nodelist * nodelist, char data);
+NodeList * createNodelist();
+NodeCell * createNodecell(struct Node * node);
+DerivativeList * createDerivativeList();
+DerivativeCell * createDerivativeCell(struct Derivative * derivative);
+
+bool isInList(NodeList * nodelist, char data);
+
 
 #endif //EXQUISITUS_C_ADAVERIS_LIST_H

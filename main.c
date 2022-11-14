@@ -16,16 +16,19 @@ int main(int argc, char *argv[]) {
 
     Tree * tree = createTree();
 
-    FILE * file = fopen("../dictionnaire_non_accentue.txt", "r");
+    FILE * file = fopen("../dicts/dico_raisonnable.txt", "r");
     char line[256];
     while (fgets(line, sizeof(line), file)) {
-        char * word = strtok(line, "\t");
-        word = strtok(NULL, "\t");
-        addWord(tree, word);
+        char * derivative = strtok(line, "\t");
+        char * baseWord = strtok(NULL, "\t");
+        char * derivativeType = strtok(NULL, "\t");
+        // todo make all 4 trees
+        // todo select tree depending on derivative type
+        addWord(tree, baseWord);
     }
 
 
-    printTreeParenthese(tree->root);
+    printTree(tree->root);
 
 
     return 0;
