@@ -13,6 +13,7 @@
 Tree * createTree() {
     Tree * tree = malloc(sizeof(Tree));
     tree->root = createNode(' ');
+    tree->size = 0;
     return tree;
 }
 
@@ -20,7 +21,7 @@ Node * createNode(char data) {
     Node * node = malloc(sizeof(Node));
     node->data = data;
     node->children = createNodelist();
-    node->derivatives = createDerivativeList();
+    node->derivatives = NULL;
     return node;
 }
 
@@ -53,6 +54,10 @@ Node * addWord(Tree * tree, char * word) {
             temp = tempNodelist->node;
             tempNodelist = temp->children->head;
         }
+    }
+    if (temp->derivatives == NULL) {
+        temp->derivatives = createDerivativeList();
+        tree->size++;
     }
     return temp;
 }

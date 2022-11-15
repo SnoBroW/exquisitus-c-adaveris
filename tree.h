@@ -6,6 +6,7 @@
 #define EXQUISITUS_C_ADAVERIS_TREE_H
 
 #include "list.h"
+#include "derivative.h"
 
 
 typedef struct Node {
@@ -16,12 +17,15 @@ typedef struct Node {
 
 typedef struct Tree {
     struct Node *root;
+    int size;
 } Tree;
 
 Tree * createTree();
 Node * createNode(char data);
 void addNode(Node * parent, Node * child);
 Node * addWord(Tree * tree, char * word);
+void addDerivative(Node * node, Derivative * derivative);
+void addAll(Tree * tree, char * baseWord, char * derivative, char * derivativeType);
 
 void printTree(Node * node);
 

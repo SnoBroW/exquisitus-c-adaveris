@@ -10,10 +10,9 @@
 #include "list.h"
 
 
-
-
 int main(int argc, char *argv[]) {
 
+    // todo make all 4 trees
     Tree * tree = createTree();
 
     FILE * file = fopen("../dicts/dico_raisonnable.txt", "r");
@@ -22,13 +21,13 @@ int main(int argc, char *argv[]) {
         char * derivative = strtok(line, "\t");
         char * baseWord = strtok(NULL, "\t");
         char * derivativeType = strtok(NULL, "\t");
-        // todo make all 4 trees
+
         // todo select tree depending on derivative type
-        addWord(tree, baseWord);
+        addAll(tree, baseWord, derivative, derivativeType);
     }
 
-
     printTree(tree->root);
+    printf("\n\nsize: %d", tree->size);
 
 
     return 0;
