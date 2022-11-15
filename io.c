@@ -1,7 +1,3 @@
-//
-// Created by Gabriel on 15/11/2022.
-//
-
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,7 +11,7 @@
 void initRand() {
     time_t seed = time(NULL);
     srand(seed);
-//    printf("%ld\n\n", seed);
+    // printf("%ld\n\n", seed);
 }
 
 Dictionary * initDict(char * filename) {

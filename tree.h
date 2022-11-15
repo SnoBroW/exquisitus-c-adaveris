@@ -1,7 +1,3 @@
-//
-// Created by Gabriel on 09/11/2022.
-//
-
 #ifndef EXQUISITUS_C_ADAVERIS_TREE_H
 #define EXQUISITUS_C_ADAVERIS_TREE_H
 
