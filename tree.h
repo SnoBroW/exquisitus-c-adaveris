@@ -27,7 +27,7 @@ Node * createNode(char data);
 void addNode(Node * parent, Node * child);
 Node * addWord(Tree * tree, char * word);
 void addDerivative(Node * node, Derivative * derivative);
-void addAll(Tree * tree, char * baseWord, char * derivative, char * derivativeType);
+void addAll(Tree * tree, char * baseWord, char * derivativeWord, char * derivativeType);
 
 Node * searchWord(Tree * tree, char * word);
 Node * recursiveRandomWord(Node * node, int * i);

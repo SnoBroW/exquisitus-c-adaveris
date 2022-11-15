@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
 
     initRand();
 
-    Dictionary * dict = initDict("../dicts/dico_raisonnable.txt");
+    Dictionary * dict = initDict("../dicts/dico_bien.txt");
 
     // ça on sait faire
     // searchWord(dict->trees[1], "abandonner");

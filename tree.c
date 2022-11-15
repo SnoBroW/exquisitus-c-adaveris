@@ -82,9 +82,9 @@ void addDerivative(Node * node, Derivative * derivative) {
     }
 }
 
-void addAll(Tree * tree, char * baseWord, char * derivative, char * derivativeType) {
+void addAll(Tree * tree, char * baseWord, char * derivativeWord, char * derivativeType) {
     Node * currentWord = addWord(tree, baseWord);
-    addDerivative(currentWord, processDerivative(derivative, derivativeType));
+    addDerivative(currentWord, processDerivative(derivativeWord, derivativeType));
 }
 
 Node * searchWord(Tree * tree, char * word) {
