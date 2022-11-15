@@ -57,6 +57,7 @@ Node * addWord(Tree * tree, char * word) {
     }
     if (temp->derivatives == NULL) {
         temp->derivatives = createDerivativeList();
+        strcpy(temp->derivatives->base, word);
         tree->size++;
     }
     return temp;
@@ -79,6 +80,52 @@ void addDerivative(Node * node, Derivative * derivative) {
 void addAll(Tree * tree, char * baseWord, char * derivative, char * derivativeType) {
     Node * currentWord = addWord(tree, baseWord);
     addDerivative(currentWord, processDerivative(derivative, derivativeType));
+}
+
+Node * searchWord(Tree * tree, char * word) {
+    Node * temp = tree->root;
+    NodeCell * tempNodelist = temp->children->head;
+
+    for(int i = 0; i < strlen(word); i++) {
+        if(!isInList(temp->children, word[i])) {
+            return NULL;
+        } else {
+            while(tempNodelist->node->data != word[i]) {
+                tempNodelist = tempNodelist->next;
+            }
+            temp = tempNodelist->node;
+            tempNodelist = temp->children->head;
+        }
+    }
+    return temp;
+}
+
+
+Node * recursiveRandomWord(Node * node, int * i) {
+    Node * selected = NULL;
+    Node * recursiveResult = NULL;
+    NodeCell * temp = node->children->head;
+
+    if (node->derivatives != NULL) {
+        (*i)++;
+        if(rand() % (*i) == 0) {
+            selected = node;
+        }
+    }
+    while(temp != NULL) {
+        recursiveResult = recursiveRandomWord(temp->node, i);
+        if(recursiveResult != NULL) {
+            selected = recursiveResult;
+        }
+        temp = temp->next;
+    }
+    return selected;
+}
+
+
+Node * randomWord(Tree * tree) {
+    int i = 0;
+    return recursiveRandomWord(tree->root, &i);
 }
 
 

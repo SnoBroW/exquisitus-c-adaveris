@@ -27,6 +27,7 @@ typedef struct DerivativeCell {
 
 typedef struct DerivativeList {
     struct DerivativeCell * head;
+    char base[32];
 } DerivativeList;
 
 NodeList * createNodelist();
