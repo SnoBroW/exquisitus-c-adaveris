@@ -62,7 +62,7 @@ Node * addWord(Tree * tree, char * word) {
     return temp;
 }
 
-// by copilot
+
 void addDerivative(Node * node, Derivative * derivative) {
     DerivativeCell * cell = createDerivativeCell(derivative);
     if (node->derivatives->head == NULL) {
