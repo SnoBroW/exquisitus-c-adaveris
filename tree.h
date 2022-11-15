@@ -8,6 +8,10 @@
 #include "list.h"
 #include "derivative.h"
 
+typedef struct dictionary {
+    struct Tree * trees[4];
+} Dictionary;
+
 
 typedef struct Node {
     char data;
@@ -19,6 +23,8 @@ typedef struct Tree {
     struct Node *root;
     int size;
 } Tree;
+
+Dictionary * createDictionary();
 
 Tree * createTree();
 Node * createNode(char data);

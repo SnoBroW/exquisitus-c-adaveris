@@ -10,6 +10,15 @@
 #include "tree.h"
 
 
+Dictionary * createDictionary() {
+    Dictionary * dict = malloc(sizeof(Dictionary));
+    for(int i = 0; i < 4; i++) {
+        dict->trees[i] = createTree();
+    }
+    return dict;
+}
+
+
 Tree * createTree() {
     Tree * tree = malloc(sizeof(Tree));
     tree->root = createNode(' ');

@@ -3,31 +3,23 @@
 //
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "tree.h"
-#include "list.h"
+#include "io.h"
 
 
 int main(int argc, char *argv[]) {
 
-    // todo make all 4 trees
-    Tree * tree = createTree();
+    initRand();
 
-    FILE * file = fopen("../dicts/dico_raisonnable.txt", "r");
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        char * derivative = strtok(line, "\t");
-        char * baseWord = strtok(NULL, "\t");
-        char * derivativeType = strtok(NULL, "\t");
+    Dictionary * dict = initDict("../dicts/dico_raisonnable.txt");
 
-        // todo select tree depending on derivative type
-        addAll(tree, baseWord, derivative, derivativeType);
-    }
+    // ça on sait faire
+    // searchWord(dict->trees[1], "abandonner");
+    // randomWord(dict->trees[1])->derivatives->base;
 
-    printTree(tree->root);
-    printf("\n\nsize: %d", tree->size);
+    printTree(dict->trees[0]->root);
+
 
 
     return 0;
