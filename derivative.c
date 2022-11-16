@@ -1,10 +1,11 @@
 #include <malloc.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 
 #include "derivative.h"
 
-Derivative * createDerivative() {
+Derivative * createEmptyDerivative() {
     Derivative * derivative = malloc(sizeof(Derivative));
     derivative->type = dtype;
     derivative->gender = dgender;
@@ -14,10 +15,19 @@ Derivative * createDerivative() {
     return derivative;
 }
 
+Derivative createDerivative(enum type type, enum gender gender, enum tense tense, enum person person, enum number number) {
+    Derivative derivative ;
+    derivative.type = type;
+    derivative.gender = gender;
+    derivative.tense = tense;
+    derivative.person = person;
+    derivative.number = number;
+    return derivative;
+}
+
 Derivative * processDerivative(char * word, char * form) {
-    Derivative * derivative = createDerivative();
+    Derivative * derivative = createEmptyDerivative();
     char * formCopy = strcpy(malloc(strlen(form) + 1), form);
-    formCopy = strtok(formCopy, "\n");
     char * currentDerivation, * currentParameter;
     derivative->type = getType(formCopy);
     if(derivative->type >= NOM && derivative->type <= PRON) {
@@ -45,6 +55,16 @@ Derivative * processDerivative(char * word, char * form) {
     strncpy(derivative->word, word, 32);
     free(formCopy);
     return derivative;
+}
+
+bool checkDerivativeRequirements(Derivative * derivative, Derivative requirements) {
+    bool result = true;
+    result = derivative->type == requirements.type && result;
+    result = (derivative->gender == requirements.gender || requirements.gender == dgender || derivative->gender == INVGEN) && result;
+    result = (derivative->number == requirements.number || requirements.number == dnumber || derivative->number == INVPL) && result;
+    result = (derivative->tense == requirements.tense || requirements.tense == dtense || derivative->tense == dtense) && result;
+    result = (derivative->person == requirements.person || requirements.person == dperson || derivative->person == dperson) && result;
+    return result;
 }
 
 

@@ -12,8 +12,12 @@ typedef struct Derivative {
     char word[32];
 } Derivative;
 
-Derivative * createDerivative();
+Derivative * createEmptyDerivative();
+Derivative createDerivative(enum type type, enum gender gender, enum tense tense, enum person person, enum number number);
+
 Derivative * processDerivative(char * form, char * word);
+
+bool checkDerivativeRequirements(Derivative * derivative, Derivative requirements);
 
 enum type getType(char * form);
 enum gender getGender(char * gender);

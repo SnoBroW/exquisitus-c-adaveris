@@ -23,6 +23,7 @@ Dictionary * initDict(char * filename) {
         char * baseWord = strtok(NULL, "\t");
         char * derivativeType = strtok(NULL, "\t");
         char * derivativeTypeCopy = strcpy(malloc(strlen(derivativeType) + 1), derivativeType);
+        derivativeTypeCopy = strtok(derivativeTypeCopy, "\n");
         int type = getType(derivativeTypeCopy);
         if(type != dtype) {
             addAll(dict->trees[type], baseWord, derivativeWord, derivativeType);
