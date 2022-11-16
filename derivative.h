@@ -4,11 +4,11 @@
 #include <string.h>
 
 typedef struct Derivative {
-    enum type { ADV, NOM, VER, ADJ, DETR, PRON, PREP, CONJ, ABRV, INTJ, ONOM, QPRO } type;  // /!\ con =/= conj
-    enum gender { MAS, FEM, INVGEN, CARD } gender;
-    enum tense { IPRE, IPSIM, IIMP, PPRE, SIMP, PPAS, SPRE, IFUT, INF, CPRE, IMPRE, IMP }  tense;
-    enum person { P1, P2, P3 } person;
-    enum number { SG, PL, INVPL } number;
+    enum type { ADV, NOM, VER, ADJ, DETR, PRON, PREP, CONJ, ABRV, INTJ, ONOM, QPRO, dtype} type;  // /!\ con =/= conj
+    enum gender { MAS, FEM, INVGEN, CARD, dgender } gender;
+    enum tense { IPRE, IPSIM, IIMP, PPRE, SIMP, PPAS, SPRE, IFUT, INF, CPRE, IMPRE, IMP, dtense }  tense;
+    enum person { P1, P2, P3, dperson } person;
+    enum number { SG, PL, INVPL, dnumber } number;
     char word[32];
 } Derivative;
 

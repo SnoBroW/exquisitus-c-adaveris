@@ -6,27 +6,51 @@
 
 Derivative * createDerivative() {
     Derivative * derivative = malloc(sizeof(Derivative));
+    derivative->type = dtype;
+    derivative->gender = dgender;
+    derivative->tense = dtense;
+    derivative->person = dperson;
+    derivative->number = dnumber;
     return derivative;
 }
 
 Derivative * processDerivative(char * word, char * form) {
     Derivative * derivative = createDerivative();
-    derivative->type = getType(form);
+    char * formCopy = strcpy(malloc(strlen(form) + 1), form);
+    formCopy = strtok(formCopy, "\n");
+    char * currentDerivation, * currentParameter;
+    derivative->type = getType(formCopy);
     if(derivative->type >= NOM && derivative->type <= PRON) {
-        char * formEnd = strtok(form, ":");
-        // todo a refaire avec des switch verts razer et des if rouges logitech cherry mx brown du cul
-        formEnd = strtok(NULL, ":");
-        printf("%s", formEnd);
+        while((currentDerivation = strtok(NULL, ":"))) {
+            currentParameter = strtok(currentDerivation, "+");
+            do {
+                switch (derivative->type) {
+                    case VER:
+                        derivative->tense = derivative->tense == dtense ? getTense(currentParameter) : derivative->tense;
+                        derivative->person = derivative->person == dperson ? getPerson(currentParameter) : derivative->person;
+                    case NOM:
+                    case ADJ:
+                    case DETR:
+                        derivative->gender = derivative->gender == dgender ? getGender(currentParameter) : derivative->gender;
+                        derivative->number = derivative->number == dnumber ? getNumber(currentParameter) : derivative->number;
+                        break;
+                    default:
+                        // ici atterit tout ce qui est sans paramètres avancés
+                        // ADV, PREP, INTJ, CONJ, CONN, ABRV, ONOM, QPRO
+                        break;
+                }
+            } while ((currentParameter = strtok(NULL, "+")));
+        }
     }
     strncpy(derivative->word, word, 32);
+    free(formCopy);
     return derivative;
 }
 
 
-enum type getType(char * form) {
-    // do not work for conj and con
-    char identifier[4];
-    strncpy(identifier, form, 3);
+enum type getType(char * type) {
+    // does not work for conj and con
+    char * identifier = strtok(type, ":");
     if (strcmp(identifier, "Ver") == 0) {
         return VER;
     } else if (strcmp(identifier, "Nom") == 0) {
@@ -36,7 +60,7 @@ enum type getType(char * form) {
     } else if (strcmp(identifier, "Adj") == 0) {
         return ADJ;
     } else {
-        return -1;
+        return dtype;
     }
 }
 
@@ -51,7 +75,7 @@ enum gender getGender(char * gender) {
     } else if (strcmp(gender, "Card") == 0) {
         return CARD;
     } else {
-        return -1;
+        return dgender;
     }
 }
 
@@ -64,7 +88,7 @@ enum number getNumber(char * number) {
     } else if (strcmp(number, "InvPL") == 0) {
         return INVPL;
     } else {
-        return -1;
+        return dnumber;
     }
 }
 
@@ -95,7 +119,7 @@ enum tense getTense(char * tense) {
     } else if (strcmp(tense, "Imp") == 0) { // imperatif des verbes pronominaux, les BG
         return IMP;
     } else {
-        return -1;
+        return dtense;
     }
 }
 
@@ -107,6 +131,7 @@ enum person getPerson(char * person) {
     } else if (strcmp(person, "P3") == 0) {
         return P3;
     } else {
-        return -1;
+        return dperson;
     }
 }
+

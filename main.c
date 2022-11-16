@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "tree.h"
 #include "io.h"
 
@@ -6,14 +7,13 @@ int main(int argc, char *argv[]) {
 
     initRand();
 
-    Dictionary * dict = initDict("../dicts/dico_bien.txt");
+    Dictionary * dict = initDict("../dicts/dictionnaire_non_accentue.txt");
 
-    // ça on sait faire
     // searchWord(dict->trees[1], "abandonner");
-    // randomWord(dict->trees[1])->derivatives->base;
+    // printf("j'adore %s les %s %s", randomWord(dict->trees[2])->derivatives->base, randomWord(dict->trees[1])->derivatives->base, randomWord(dict->trees[3])->derivatives->base);
+    // printTree(dict->trees[0]->root);
 
-    printTree(dict->trees[0]->root);
-
+    Node * word = randomWord(dict->trees[2]);
 
 
     return 0;
