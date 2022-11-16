@@ -2,6 +2,7 @@
 #define EXQUISITUS_C_ADAVERIS_DERIVATIVE_H
 
 #include <string.h>
+#include "tree.h"
 
 typedef struct Derivative {
     enum type { ADV, NOM, VER, ADJ, DETR, PRON, PREP, CONJ, ABRV, INTJ, ONOM, QPRO, dtype} type;  // /!\ con =/= conj
@@ -18,6 +19,8 @@ Derivative createDerivative(enum type type, enum gender gender, enum tense tense
 Derivative * processDerivative(char * form, char * word);
 
 bool checkDerivativeRequirements(Derivative * derivative, Derivative requirements);
+char * applyDerivative(Node * node, Derivative derivative);
+
 
 enum type getType(char * form);
 enum gender getGender(char * gender);

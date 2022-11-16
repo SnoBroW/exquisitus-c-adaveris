@@ -31,7 +31,6 @@ void addAll(Tree * tree, char * baseWord, char * derivativeWord, char * derivati
 
 Node * searchWord(Tree * tree, char * word);
 char * searchDerivative(Tree * tree, char * baseword, Derivative derivative);
-char * applyDerivative(Node * node, Derivative derivative);
 
 Node * recursiveRandomWord(Node * node, int * i);
 Node * randomWord(Tree * tree);

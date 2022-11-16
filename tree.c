@@ -110,17 +110,6 @@ char * searchDerivative(Tree * tree, char * baseword, Derivative derivative) {
     return applyDerivative(searchWord(tree, baseword), derivative);
 }
 
-char * applyDerivative(Node * node, Derivative derivative) {
-    DerivativeCell * tempCell = node->derivatives->head;
-    while(tempCell != NULL) {
-        if(checkDerivativeRequirements(tempCell->derivative, derivative)) {
-            return tempCell->derivative->word;
-        }
-        tempCell = tempCell->next;
-    }
-    return NULL;
-}
-
 
 
 Node * recursiveRandomWord(Node * node, int * i) {
