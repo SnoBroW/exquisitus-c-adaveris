@@ -65,17 +65,6 @@ bool checkDerivativeRequirements(Derivative * derivative, Derivative requirement
     return result;
 }
 
-char * applyDerivative(Node * node, Derivative derivative) {
-    DerivativeCell * tempCell = node->derivatives->head;
-    while(tempCell != NULL) {
-        if(checkDerivativeRequirements(tempCell->derivative, derivative)) {
-            return tempCell->derivative->word;
-        }
-        tempCell = tempCell->next;
-    }
-    return NULL;
-}
-
 
 enum type getType(char * type) {
     // does not work for conj and con

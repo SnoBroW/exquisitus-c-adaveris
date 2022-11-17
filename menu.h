@@ -1,4 +1,6 @@
 #include "tree.h"
+#include "derivative.h"
+#include <stdbool.h>
 
 #ifndef EXQUISITUS_C_ADAVERIS_MENU_H
 #define EXQUISITUS_C_ADAVERIS_MENU_H

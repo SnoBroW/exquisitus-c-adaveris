@@ -127,7 +127,6 @@ return word;
 }
 
 
-
 char * applyDerivative(Node * node, Derivative derivative) {
     DerivativeCell * tempCell = node->derivatives->head;
     while(tempCell != NULL) {
@@ -138,7 +137,6 @@ char * applyDerivative(Node * node, Derivative derivative) {
     }
     return NULL;
 }
-
 
 
 Node * recursiveRandomWord(Node * node, int * i) {
