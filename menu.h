@@ -16,4 +16,6 @@ void pattern1(Dictionary * dict, char * result);
 void pattern2(Dictionary * dict, char * result);
 void pattern3(Dictionary * dict, char * result);
 
+void splashscreen(Dictionary * dict, char * result);
+
 #endif //EXQUISITUS_C_ADAVERIS_MENU_H

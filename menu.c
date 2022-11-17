@@ -8,7 +8,8 @@
 const char * mainElements[] = {"Menu principal", "Generer des phrases", "Rechercher un mot", "Autocompletion", "Fonctionnalites maudites /!\\", "Quitter"};
 const char * genElements[] = {"Selection de modele de phrase", "Modele 1", "Modele 2", "La surprise du Chef", "Retour"};
 const char * searchElements[] = {"Rechercher dans le dictionnaire", "Rechercher un mot", "Rechercher un mot et ses forme flechies", "Retour"};
-const char * cursedElements[] = {"ATTENTION ZONE DANGEREUSE", "Afficher arbre /!\\", "Retour"};
+const char * cursedElements[] = {"ATTENTION ZONE DANGEREUSE", "Afficher arbre /!\\", "Afficher la seed /!\\", "Retour"};
+
 const char * typeEnumString[] = {"Adverbes", "Noms", "Verbes", "Adjectifs"};
 
 
@@ -32,35 +33,41 @@ void banner() {
 
 void mainMenu() {
     banner();
-    initRand();
+    int seed = initRand();
+
     Dictionary * dict = initDict("../dicts/dictionnaire_non_accentue.txt");
+    // Dictionary * dict = initDict("../dicts/dictionnaire.txt");
+
     Node * node;
     DerivativeCell * derivativeCell;
+    bool found = false;
     char word[256];
     int x = 0;
-    bool found = false;
 
-    do {
+    splashscreen(dict, word);
+    printf("\t\"%s\"\n\t\t\t - %s\n\n", word, rand() % 3 ? "Pol" : rand() % 2 ? "Gab" : "Banane");
+
+    while(!strcmp("magnifique", "magnifique")) { // boucle infinie très sophistiquée
         switch (multiChoiceMenu((char **) mainElements, 6, true, true)) {
             case 1:
                 switch (multiChoiceMenu((char **) genElements, 5, true, true)) {
                     case 1:
                         printf("\n");
-                        for(int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 5; i++) {
                             pattern1(dict, word);
                             printf("%s\n", word);
                         }
                         break;
                     case 2:
                         printf("\n");
-                        for(int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 5; i++) {
                             pattern2(dict, word);
                             printf("%s\n", word);
                         }
                         break;
                     case 3:
                         printf("\n");
-                        for(int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 5; i++) {
                             pattern3(dict, word);
                             printf("%s\n", word);
                         }
@@ -71,7 +78,7 @@ void mainMenu() {
                 printf("\n");
                 break;
             case 2:
-                switch(multiChoiceMenu((char **) searchElements, 4, true, true)) {
+                switch (multiChoiceMenu((char **) searchElements, 4, true, true)) {
                     case 1:
                         printf("Entrez le mot a rechercher :\n>");
                         fgets(word, 256, stdin);
@@ -80,14 +87,14 @@ void mainMenu() {
                         found = false;
                         while (x < 4) {
                             node = searchWord(dict->trees[x], word);
-                            if(node != NULL && node->derivatives != NULL) {
+                            if (node != NULL && node->derivatives != NULL) {
                                 found = true;
-                                printf("\n\t%s found @ 0x%x", node->derivatives->base, (int) &node);
+                                printf("\n\t\"%s\" found @ 0x%x", node->derivatives->base, (int) &node);
                                 printf("\n\ttree: %s\n", typeEnumString[x]);
                             }
                             x++;
                         }
-                        if(!found) {
+                        if (!found) {
                             printf("\n\tMot introuvable\n\n");
                         } else {
                             printf("\n\n");
@@ -99,10 +106,10 @@ void mainMenu() {
                         word[strlen(word) - 1] = '\0';
                         x = 0;
                         found = false;
-                        while (x < 4){
+                        while (x < 4) {
                             node = searchWord(dict->trees[x], word);
-                            if(node != NULL && node->derivatives != NULL) {
-                                found  = true;
+                            if (node != NULL && node->derivatives != NULL) {
+                                found = true;
                                 printf("\n\t%s -->\t", node->derivatives->base);
                                 derivativeCell = node->derivatives->head;
                                 while (derivativeCell != NULL) {
@@ -113,7 +120,7 @@ void mainMenu() {
                             }
                             x++;
                         }
-                        if(!found) {
+                        if (!found) {
                             printf("\n\tMot introuvable\n\n");
                         } else {
                             printf("\n\n");
@@ -127,13 +134,15 @@ void mainMenu() {
                 printf("Work in progress...\n\n");
                 break;
             case 4:
-                switch(multiChoiceMenu((char **) cursedElements, 3, true, true)) {
+                switch (multiChoiceMenu((char **) cursedElements, 4, true, true)) {
                     case 1:
-                        for(int j = 0; j < 4; j++) {
+                        for (int j = 0; j < 4; j++) {
                             printTree(dict->trees[j]->root);
                             printf("\n\n");
                         }
                         break;
+                    case 2:
+                        printf("seed: %d\n\n", seed);
                     default:
                         break;
                 }
@@ -145,7 +154,7 @@ void mainMenu() {
                 printf("Choix invalide\n\n");
                 break;
         }
-    } while (true);
+    }
 }
 
 
@@ -263,4 +272,17 @@ void pattern3(Dictionary * dict, char * result) {
     char * nom3 = randomDerivation(dict, nom3d);
 
     sprintf(result, "Albane %s Gabriel pendant que %s %s %s %s %s %s sans %s.", ver1, article(nom1d.number, nom1d.gender, nom1[0], false), nom1, ver2, adv, article(nom2d.number, nom2d.gender, nom2[0], false), nom2, nom3);
+}
+
+void splashscreen(Dictionary * dict, char * result) {
+
+    Derivative nomd = createDerivative(NOM, rand() % 2 ? MAS : FEM, dtense, dperson, rand() % 2 ? SG : PL);
+    Derivative advd = createDerivative(ADV, dgender, dtense, dperson, dnumber);
+
+    char * nom = randomDerivation(dict, nomd);
+    char * adv = randomDerivation(dict, advd);
+
+    adv[0] = adv[0] - 32;
+
+    sprintf(result, "%s %s ? %s.", article(nomd.number, nomd.gender, nom[0], true), nom, adv);
 }

@@ -3,7 +3,7 @@
 
 #include "tree.h"
 
-void initRand();
+int initRand();
 Dictionary * initDict(char * filename);
 
 #endif //EXQUISITUS_C_ADAVERIS_IO_H

@@ -8,10 +8,11 @@
 #include "tree.h"
 
 
-void initRand() {
+int initRand() {
     time_t seed = time(NULL);
     srand(seed);
     // printf("%ld\n\n", seed);
+    return seed;
 }
 
 Dictionary * initDict(char * filename) {
