@@ -3,6 +3,9 @@
 #ifndef EXQUISITUS_C_ADAVERIS_MENU_H
 #define EXQUISITUS_C_ADAVERIS_MENU_H
 
+
+void mainMenu();
+
 int multiChoiceMenu(char * elements[], int size, bool title, bool back);
 
 bool isVowel(char c);

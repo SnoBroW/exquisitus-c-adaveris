@@ -5,7 +5,148 @@
 #include "derivative.h"
 #include "io.h"
 
-const char *mainElements[] = {"Jouer", "Résoudre", "Générer", "Quitter"};
+const char * mainElements[] = {"Menu principal", "Generer des phrases", "Rechercher un mot", "Autocompletion", "Fonctionnalites maudites /!\\", "Quitter"};
+const char * genElements[] = {"Selection de modele de phrase", "Modele 1", "Modele 2", "La surprise du Chef", "Retour"};
+const char * searchElements[] = {"Rechercher dans le dictionnaire", "Rechercher un mot", "Rechercher un mot et ses forme flechies", "Retour"};
+const char * cursedElements[] = {"ATTENTION ZONE DANGEREUSE", "Afficher arbre /!\\", "Retour"};
+const char * typeEnumString[] = {"Adverbes", "Noms", "Verbes", "Adjectifs"};
+
+
+void banner() {
+    printf("\n"
+           "\n"
+           "                          .__       .__  __                                                   \n"
+           "  ____ ___  ___________ __|__| _____|__|/  |_ __ __  ______                                   \n"
+           "_/ __ \\\\  \\/  / ____/  |  \\  |/  ___/  \\   __\\  |  \\/  ___/                                   \n"
+           "\\  ___/ >    < <_|  |  |  /  |\\___ \\|  ||  | |  |  /\\___ \\                                    \n"
+           " \\___  >__/\\_ \\__   |____/|__/____  >__||__| |____//____  >                                   \n"
+           "     \\/      \\/  |__|             \\/                    \\/                                    \n"
+           "                       ___          ___                .___                        .__        \n"
+           "                      /  /   ____   \\  \\   _____     __| _/____ ___  __ ___________|__| ______\n"
+           "                     /  /  _/ ___\\   \\  \\  \\__  \\   / __ |\\__  \\\\  \\/ // __ \\_  __ \\  |/  ___/\n"
+           "                    (  (   \\  \\___    )  )  / __ \\_/ /_/ | / __ \\\\   /\\  ___/|  | \\/  |\\___ \\ \n"
+           "                     \\  \\   \\___  >  /  /  (____  /\\____ |(____  /\\_/  \\___  >__|  |__/____  >\n"
+           "                      \\__\\      \\/  /__/        \\/      \\/     \\/          \\/              \\/ \n"
+           "\n\n");
+}
+
+void mainMenu() {
+    banner();
+    initRand();
+    Dictionary * dict = initDict("../dicts/dictionnaire_non_accentue.txt");
+    Node * node;
+    DerivativeCell * derivativeCell;
+    char word[256];
+    int x = 0;
+    bool found = false;
+
+    do {
+        switch (multiChoiceMenu((char **) mainElements, 6, true, true)) {
+            case 1:
+                switch (multiChoiceMenu((char **) genElements, 5, true, true)) {
+                    case 1:
+                        printf("\n");
+                        for(int i = 0; i < 5; i++) {
+                            pattern1(dict, word);
+                            printf("%s\n", word);
+                        }
+                        break;
+                    case 2:
+                        printf("\n");
+                        for(int i = 0; i < 5; i++) {
+                            pattern2(dict, word);
+                            printf("%s\n", word);
+                        }
+                        break;
+                    case 3:
+                        printf("\n");
+                        for(int i = 0; i < 5; i++) {
+                            pattern3(dict, word);
+                            printf("%s\n", word);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                printf("\n");
+                break;
+            case 2:
+                switch(multiChoiceMenu((char **) searchElements, 4, true, true)) {
+                    case 1:
+                        printf("Entrez le mot a rechercher :\n>");
+                        fgets(word, 256, stdin);
+                        word[strlen(word) - 1] = '\0';
+                        x = 0;
+                        found = false;
+                        while (x < 4) {
+                            node = searchWord(dict->trees[x], word);
+                            if(node != NULL && node->derivatives != NULL) {
+                                found = true;
+                                printf("\n\t%s found @ 0x%x", node->derivatives->base, (int) &node);
+                                printf("\n\ttree: %s\n", typeEnumString[x]);
+                            }
+                            x++;
+                        }
+                        if(!found) {
+                            printf("\n\tMot introuvable\n\n");
+                        } else {
+                            printf("\n\n");
+                        }
+                        break;
+                    case 2:
+                        printf("Entrez le mot a rechercher :\n>");
+                        fgets(word, 256, stdin);
+                        word[strlen(word) - 1] = '\0';
+                        x = 0;
+                        found = false;
+                        while (x < 4){
+                            node = searchWord(dict->trees[x], word);
+                            if(node != NULL && node->derivatives != NULL) {
+                                found  = true;
+                                printf("\n\t%s -->\t", node->derivatives->base);
+                                derivativeCell = node->derivatives->head;
+                                while (derivativeCell != NULL) {
+                                    printf("%s ", derivativeCell->derivative->word);
+                                    derivativeCell = derivativeCell->next;
+                                }
+                                printf("\n\ttree: %s\n", typeEnumString[x]);
+                            }
+                            x++;
+                        }
+                        if(!found) {
+                            printf("\n\tMot introuvable\n\n");
+                        } else {
+                            printf("\n\n");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 3:
+                printf("Work in progress...\n\n");
+                break;
+            case 4:
+                switch(multiChoiceMenu((char **) cursedElements, 3, true, true)) {
+                    case 1:
+                        for(int j = 0; j < 4; j++) {
+                            printTree(dict->trees[j]->root);
+                            printf("\n\n");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 0:
+                printf("Merci et au plaisir\n\n");
+                return;
+            default:
+                printf("Choix invalide\n\n");
+                break;
+        }
+    } while (true);
+}
 
 
 int multiChoiceMenu(char *elements[], int size, bool title, bool back) {
