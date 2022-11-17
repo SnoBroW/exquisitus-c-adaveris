@@ -4,10 +4,11 @@
 #include <string.h>
 #include "tree.h"
 
+
 typedef struct Derivative {
-    enum type { ADV, NOM, VER, ADJ, DETR, PRON, PREP, CONJ, ABRV, INTJ, ONOM, QPRO, dtype} type;  // /!\ con =/= conj
+    enum type { ADV, NOM, VER, ADJ, DETR, PRON, PREP, CONJ, ABRV, INTJ, ONOM, QPRO, dtype} type;
     enum gender { MAS, FEM, INVGEN, CARD, dgender } gender;
-    enum tense { IPRE, IPSIM, IIMP, PPRE, SIMP, PPAS, SPRE, IFUT, INF, CPRE, IMPRE, IMP, dtense }  tense;
+    enum tense { IPRE, IFUT, IPSIM, IIMP, SIMP, SPRE, INF, CPRE, PPRE, PPAS, IMP, IMPRE, dtense }  tense;
     enum person { P1, P2, P3, dperson } person;
     enum number { SG, PL, INVPL, dnumber } number;
     char word[32];

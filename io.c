@@ -22,13 +22,14 @@ Dictionary * initDict(char * filename) {
         char * derivativeWord = strtok(line, "\t");
         char * baseWord = strtok(NULL, "\t");
         char * derivativeType = strtok(NULL, "\t");
-        char * derivativeTypeCopy = strcpy(malloc(strlen(derivativeType) + 1), derivativeType);
-        derivativeTypeCopy = strtok(derivativeTypeCopy, "\n");
+        derivativeType[strlen(derivativeType) - 1] = '\0';
+        char * derivativeTypeCopy = malloc(strlen(derivativeType) + 1);
+        strcpy(derivativeTypeCopy, derivativeType);
         int type = getType(derivativeTypeCopy);
         if(type != dtype) {
             addAll(dict->trees[type], baseWord, derivativeWord, derivativeType);
         }
-        free(derivativeTypeCopy);
+        free(derivativeType);
     }
     fclose(file);
     return dict;

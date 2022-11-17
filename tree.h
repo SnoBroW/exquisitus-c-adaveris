@@ -30,12 +30,13 @@ void addDerivative(Node * node, Derivative * derivative);
 void addAll(Tree * tree, char * baseWord, char * derivativeWord, char * derivativeType);
 
 Node * searchWord(Tree * tree, char * word);
-char * searchDerivative(Tree * tree, char * baseword, Derivative derivative);
+char * searchDerivation(Tree * tree, char * baseword, Derivative derivative);
 
 Node * recursiveRandomWord(Node * node, int * i);
 Node * randomWord(Tree * tree);
+char * randomDerivation(Dictionary * dict, Derivative derivative);
 
-
+char * applyDerivative(Node * node, Derivative derivative);
 
 void printTree(Node * node);
 

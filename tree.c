@@ -106,8 +106,37 @@ Node * searchWord(Tree * tree, char * word) {
 }
 
 
-char * searchDerivative(Tree * tree, char * baseword, Derivative derivative) {
+char * searchDerivation(Tree * tree, char * baseword, Derivative derivative) {
     return applyDerivative(searchWord(tree, baseword), derivative);
+}
+
+Node * randomWord(Tree * tree) {
+    int i = 0;
+    return recursiveRandomWord(tree->root, &i);
+}
+
+char * randomDerivation(Dictionary * dict, Derivative derivative) {
+    Tree * tree = dict->trees[derivative.type];
+    Node * node;
+    char * word;
+    do {
+        node = randomWord(tree);
+        word = applyDerivative(node, derivative);
+    } while (word == NULL);
+return word;
+}
+
+
+
+char * applyDerivative(Node * node, Derivative derivative) {
+    DerivativeCell * tempCell = node->derivatives->head;
+    while(tempCell != NULL) {
+        if(checkDerivativeRequirements(tempCell->derivative, derivative)) {
+            return tempCell->derivative->word;
+        }
+        tempCell = tempCell->next;
+    }
+    return NULL;
 }
 
 
@@ -131,12 +160,6 @@ Node * recursiveRandomWord(Node * node, int * i) {
         temp = temp->next;
     }
     return selected;
-}
-
-
-Node * randomWord(Tree * tree) {
-    int i = 0;
-    return recursiveRandomWord(tree->root, &i);
 }
 
 

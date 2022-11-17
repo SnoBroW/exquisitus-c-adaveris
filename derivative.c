@@ -27,9 +27,8 @@ Derivative createDerivative(enum type type, enum gender gender, enum tense tense
 
 Derivative * processDerivative(char * word, char * form) {
     Derivative * derivative = createEmptyDerivative();
-    char * formCopy = strcpy(malloc(strlen(form) + 1), form);
     char * currentDerivation, * currentParameter;
-    derivative->type = getType(formCopy);
+    derivative->type = getType(form);
     if(derivative->type >= NOM && derivative->type <= PRON) {
         while((currentDerivation = strtok(NULL, ":"))) {
             currentParameter = strtok(currentDerivation, "+");
@@ -53,7 +52,6 @@ Derivative * processDerivative(char * word, char * form) {
         }
     }
     strncpy(derivative->word, word, 32);
-    free(formCopy);
     return derivative;
 }
 
