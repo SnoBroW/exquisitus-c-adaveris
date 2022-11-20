@@ -51,7 +51,9 @@ void freeNode(Node * node) {
         head = next;
     }
     freeNodelist(node->children);
-    freeDerivativeList(node->derivatives);
+    if(node->derivatives != NULL) {
+        freeDerivativeList(node->derivatives);
+    }
     free(node);
 }
 
