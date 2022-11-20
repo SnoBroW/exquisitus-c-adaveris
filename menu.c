@@ -148,6 +148,7 @@ void mainMenu() {
                 }
                 break;
             case 0:
+                freeDictionary(dict);
                 printf("Merci et au plaisir\n\n");
                 return;
             default:

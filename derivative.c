@@ -25,6 +25,10 @@ Derivative createDerivative(enum type type, enum gender gender, enum tense tense
     return derivative;
 }
 
+void freeDerivative(Derivative * derivative) {
+    free(derivative);
+}
+
 Derivative * processDerivative(char * word, char * form) {
     Derivative * derivative = createEmptyDerivative();
     char * currentDerivation, * currentParameter;

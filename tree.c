@@ -14,6 +14,12 @@ Dictionary * createDictionary() {
     return dict;
 }
 
+void freeDictionary(Dictionary * dict) {
+    for(int i = 0; i < 4; i++) {
+        freeTree(dict->trees[i]);
+    }
+    free(dict);
+}
 
 Tree * createTree() {
     Tree * tree = malloc(sizeof(Tree));
@@ -22,12 +28,25 @@ Tree * createTree() {
     return tree;
 }
 
+void freeTree(Tree * tree) {
+    freeNode(tree->root);
+    free(tree);
+}
+
 Node * createNode(char data) {
     Node * node = malloc(sizeof(Node));
     node->data = data;
     node->children = createNodelist();
     node->derivatives = NULL;
     return node;
+}
+
+void freeNode(Node * node) {
+    freeNodelist(node->children);
+    if(node->derivatives != NULL) {
+        freeDerivativeList(node->derivatives);
+    }
+    free(node);
 }
 
 void addNode(Node * parent, Node * child) {
