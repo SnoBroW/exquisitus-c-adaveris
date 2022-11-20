@@ -28,6 +28,7 @@ Tree * createTree() {
     return tree;
 }
 
+// a recursive function to free a tree and all its nodes
 void freeTree(Tree * tree) {
     freeNode(tree->root);
     free(tree);
@@ -41,11 +42,16 @@ Node * createNode(char data) {
     return node;
 }
 
+// a recursive function to free a node and its children
 void freeNode(Node * node) {
-    freeNodelist(node->children);
-    if(node->derivatives != NULL) {
-        freeDerivativeList(node->derivatives);
+    NodeCell * head = node->children->head;
+    while(head != NULL) {
+        NodeCell * next = head->next;
+        freeNode(head->node);
+        head = next;
     }
+    freeNodelist(node->children);
+    freeDerivativeList(node->derivatives);
     free(node);
 }
 
