@@ -35,8 +35,8 @@ void mainMenu() {
     banner();
     int seed = initRand();
 
-    Dictionary * dict = initDict("../dicts/dictionnaire_non_accentue.txt");
-    // Dictionary * dict = initDict("../dicts/dictionnaire.txt");
+    // Dictionary * dict = initDict("dicts/dictionnaire_non_accentue.txt");
+    Dictionary * dict = initDict("dicts/dictionnaire.txt");
 
     Node * node;
     DerivativeCell * derivativeCell;
