@@ -30,7 +30,7 @@ Dictionary * initDict(char * filename) {
         if(type != dtype) {
             addAll(dict->trees[type], baseWord, derivativeWord, derivativeType);
         }
-        //free(derivativeType);
+        free(derivativeTypeCopy);
     }
     fclose(file);
     return dict;
