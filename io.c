@@ -18,6 +18,10 @@ int initRand() {
 Dictionary * initDict(char * filename) {
     Dictionary * dict = createDictionary();
     FILE * file = fopen(filename, "r");
+    if(file == NULL) {
+        printf("Erreur d'importation du dictionnaire\n");
+        exit(1);
+    }
     char line[256];
     while (fgets(line, sizeof(line), file)) {
         char * derivativeWord = strtok(line, "\t");
