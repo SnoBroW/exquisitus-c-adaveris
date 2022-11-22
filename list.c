@@ -40,18 +40,18 @@ DerivativeCell * createDerivativeCell(Derivative * derivative) {
     return cell;
 }
 
-void freeDerivative(Derivative * derivative) {
-    free(derivative);
+
+void recursiveFreeDerivative(DerivativeCell * cell) {
+    if(cell->next != NULL) {
+        recursiveFreeDerivative(cell->next);
+    }
+    free(cell->derivative);
+    free(cell);
 }
 
-// a recursive function to free a derivative list
 void freeDerivativeList(DerivativeList * list) {
-    DerivativeCell * temp = list->head;
-    while(temp != NULL) {
-        DerivativeCell * next = temp->next;
-        freeDerivative(temp->derivative);
-        free(temp);
-        temp = next;
+    if(list->head != NULL) {
+        recursiveFreeDerivative(list->head);
     }
     free(list);
 }

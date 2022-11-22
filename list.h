@@ -32,6 +32,8 @@ void freeNodelist(NodeList * list);
 
 DerivativeList * createDerivativeList();
 DerivativeCell * createDerivativeCell(struct Derivative * derivative);
+
+void recursiveFreeDerivative(DerivativeCell * cell);
 void freeDerivativeList(DerivativeList * list);
 
 
