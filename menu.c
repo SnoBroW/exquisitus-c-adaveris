@@ -202,23 +202,23 @@ bool isVowel(char c) {
 
 
 char * article(enum number number, enum gender gender, char firstLetter, bool capital) {
-    char * article = malloc(4);
-
     int random = rand() % 2;
+    char * article;
 
     if(number == PL) {
-        strcpy(article, random ? "des" : "les");
+        article = random ? "des" : "les";
     } else {
         if(gender == FEM) {
-            strcpy(article, random ? "une" : isVowel(firstLetter) ? "l'" : "la");
+            article = random ? "une" : isVowel(firstLetter) ? "l'" : "la";
         } else {
-            strcpy(article, random ? "un" : isVowel(firstLetter) ? "l'" : "le");
+            article = random ? "un" : isVowel(firstLetter) ? "l'" : "le";
         }
     }
 
     if(capital) {
         article[0] = article[0] - 32;
     }
+
     return article;
 }
 
