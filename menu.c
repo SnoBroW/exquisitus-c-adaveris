@@ -276,7 +276,6 @@ void pattern3(Dictionary * dict, char * result) {
     char * nom3 = randomDerivation(dict, nom3d);
 
     sprintf(result, "Albane %s Gabriel pendant que %s %s %s %s %s %s sans %s.", ver1, article(nom1d.number, nom1d.gender, nom1[0]), nom1, ver2, adv, article(nom2d.number, nom2d.gender, nom2[0]), nom2, nom3);
-    result[0] = result[0] - 32;
 }
 
 void splashscreen(Dictionary * dict, char * result) {
