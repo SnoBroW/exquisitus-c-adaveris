@@ -89,7 +89,7 @@ void mainMenu() {
                             node = searchWord(dict->trees[x], word);
                             if (node != NULL && node->derivatives != NULL) {
                                 found = true;
-                                printf("\n\t\"%s\" found @ 0x%x", node->derivatives->base, (int) &node);
+                                printf("\n\t\"%s\" found @ 0x%lx", node->derivatives->base, (long) &node);
                                 printf("\n\ttree: %s\n", typeEnumString[x]);
                             }
                             x++;
