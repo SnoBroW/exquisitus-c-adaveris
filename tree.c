@@ -42,20 +42,22 @@ Node * createNode(char data) {
     return node;
 }
 
-// a recursive function to free a node and its children
+// a recursive function to free a node, its children and its derivatives
 void freeNode(Node * node) {
-    NodeCell * head = node->children->head;
+    NodeList * children = node->children;
+    NodeCell * head = children->head;
     while(head != NULL) {
         NodeCell * next = head->next;
         freeNode(head->node);
         head = next;
     }
-    freeNodelist(node->children);
+    freeNodelist(children);
     if(node->derivatives != NULL) {
         freeDerivativeList(node->derivatives);
     }
     free(node);
 }
+
 
 void addNode(Node * parent, Node * child) {
     NodeCell * cell = createNodecell(child);
