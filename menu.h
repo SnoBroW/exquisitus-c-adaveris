@@ -12,7 +12,7 @@ int multiChoiceMenu(char * elements[], int size, bool title, bool back);
 
 bool isVowel(char c);
 
-char * article(enum number number, enum gender gender, char firstLetter, bool capital);
+char * article(enum number number, enum gender gender, char firstLetter);
 
 void pattern1(Dictionary * dict, char * result);
 void pattern2(Dictionary * dict, char * result);

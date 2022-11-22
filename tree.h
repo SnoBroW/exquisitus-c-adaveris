@@ -21,9 +21,14 @@ typedef struct Tree {
 } Tree;
 
 Dictionary * createDictionary();
+void freeDictionary(Dictionary * dict);
 
 Tree * createTree();
+void freeTree(Tree * tree);
+
 Node * createNode(char data);
+void freeNode(Node * node);
+
 void addNode(Node * parent, Node * child);
 Node * addWord(Tree * tree, char * word);
 void addDerivative(Node * node, Derivative * derivative);

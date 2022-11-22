@@ -28,8 +28,14 @@ typedef struct DerivativeList {
 
 NodeList * createNodelist();
 NodeCell * createNodecell(struct Node * node);
+void freeNodelist(NodeList * list);
+
 DerivativeList * createDerivativeList();
 DerivativeCell * createDerivativeCell(struct Derivative * derivative);
+
+void recursiveFreeDerivative(DerivativeCell * cell);
+void freeDerivativeList(DerivativeList * list);
+
 
 bool isInList(NodeList * nodelist, char data);
 

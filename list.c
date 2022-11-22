@@ -17,6 +17,16 @@ NodeCell * createNodecell(Node * node) {
     return cell;
 }
 
+void freeNodelist(NodeList * list) {
+    NodeCell * temp = list->head;
+    while(temp != NULL) {
+        NodeCell * next = temp->next;
+        free(temp);
+        temp = next;
+    }
+    free(list);
+}
+
 DerivativeList * createDerivativeList() {
     DerivativeList * list = malloc(sizeof(DerivativeList));
     list->head = NULL;
@@ -28,6 +38,22 @@ DerivativeCell * createDerivativeCell(Derivative * derivative) {
     cell->derivative = derivative;
     cell->next = NULL;
     return cell;
+}
+
+
+void recursiveFreeDerivative(DerivativeCell * cell) {
+    if(cell->next != NULL) {
+        recursiveFreeDerivative(cell->next);
+    }
+    free(cell->derivative);
+    free(cell);
+}
+
+void freeDerivativeList(DerivativeList * list) {
+    if(list->head != NULL) {
+        recursiveFreeDerivative(list->head);
+    }
+    free(list);
 }
 
 // check if a char is in a list of nodes

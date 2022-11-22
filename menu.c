@@ -1,6 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include "menu.h"
 #include "derivative.h"
 #include "io.h"
@@ -21,7 +21,7 @@ void banner() {
            "_/ __ \\\\  \\/  / ____/  |  \\  |/  ___/  \\   __\\  |  \\/  ___/                                   \n"
            "\\  ___/ >    < <_|  |  |  /  |\\___ \\|  ||  | |  |  /\\___ \\                                    \n"
            " \\___  >__/\\_ \\__   |____/|__/____  >__||__| |____//____  >                                   \n"
-           "     \\/      \\/  |__|             \\/                    \\/                                    \n"
+           "     \\/      \\/  |__|             \\/                    \\/                    processDerivative                \n"
            "                       ___          ___                .___                        .__        \n"
            "                      /  /   ____   \\  \\   _____     __| _/____ ___  __ ___________|__| ______\n"
            "                     /  /  _/ ___\\   \\  \\  \\__  \\   / __ |\\__  \\\\  \\/ // __ \\_  __ \\  |/  ___/\n"
@@ -32,11 +32,16 @@ void banner() {
 }
 
 void mainMenu() {
+    // Dictionary * dict = initDict("dicts/dictionnaire_non_accentue.txt");
+    Dictionary * dict = initDict("dicts/dictionnaire.txt");
+
+    if(dict == NULL) {
+        printf("Erreur d'importation du dictionnaire\n");
+        exit(1);
+    }
+
     banner();
     int seed = initRand();
-
-    Dictionary * dict = initDict("../dicts/dictionnaire_non_accentue.txt");
-    // Dictionary * dict = initDict("../dicts/dictionnaire.txt");
 
     Node * node;
     DerivativeCell * derivativeCell;
@@ -89,7 +94,7 @@ void mainMenu() {
                             node = searchWord(dict->trees[x], word);
                             if (node != NULL && node->derivatives != NULL) {
                                 found = true;
-                                printf("\n\t\"%s\" found @ 0x%x", node->derivatives->base, (int) &node);
+                                printf("\n\t\"%s\" found @ 0x%lx", node->derivatives->base, (long) &node);
                                 printf("\n\ttree: %s\n", typeEnumString[x]);
                             }
                             x++;
@@ -148,6 +153,7 @@ void mainMenu() {
                 }
                 break;
             case 0:
+                freeDictionary(dict);
                 printf("Merci et au plaisir\n\n");
                 return;
             default:
@@ -200,24 +206,20 @@ bool isVowel(char c) {
 
 
 
-char * article(enum number number, enum gender gender, char firstLetter, bool capital) {
-    char * article = malloc(4);
-
+char * article(enum number number, enum gender gender, char firstLetter) {
     int random = rand() % 2;
+    char * article = NULL;
 
     if(number == PL) {
-        strcpy(article, random ? "des" : "les");
+        article = (random ? "des" : "les");
     } else {
         if(gender == FEM) {
-            strcpy(article, random ? "une" : isVowel(firstLetter) ? "l'" : "la");
+            article = (random ? "une" : isVowel(firstLetter) ? "l'" : "la");
         } else {
-            strcpy(article, random ? "un" : isVowel(firstLetter) ? "l'" : "le");
+            article = (random ? "un" : isVowel(firstLetter) ? "l'" : "le");
         }
     }
 
-    if(capital) {
-        article[0] = article[0] - 32;
-    }
     return article;
 }
 
@@ -234,7 +236,8 @@ void pattern1(Dictionary * dict, char * result) {
     char * ver = randomDerivation(dict, verd);
     char * nom2 = randomDerivation(dict, nom2d);
 
-    sprintf(result, "%s %s %s %s %s %s.", article(nom1d.number, nom1d.gender, nom1[0], true), nom1, adj, ver, article(nom2d.number, nom2d.gender, nom2[0], false), nom2);
+    sprintf(result, "%s %s %s %s %s %s.", article(nom1d.number, nom1d.gender, nom1[0]), nom1, adj, ver, article(nom2d.number, nom2d.gender, nom2[0]), nom2);
+    result[0] = result[0] - 32;
 }
 
 
@@ -251,7 +254,8 @@ void pattern2(Dictionary * dict, char * result) {
     char * nom2 = randomDerivation(dict, nom2d);
     char * adj = randomDerivation(dict, adjd);
 
-    sprintf(result, "%s %s qui %s %s %s %s %s.", article(nom1d.number, nom1d.gender, nom1[0], true), nom1, ver1, ver2, article(nom2d.number, nom2d.gender, nom2[0], false), nom2, adj);
+    sprintf(result, "%s %s qui %s %s %s %s %s.", article(nom1d.number, nom1d.gender, nom1[0]), nom1, ver1, ver2, article(nom2d.number, nom2d.gender, nom2[0]), nom2, adj);
+    result[0] = result[0] - 32;
 }
 
 
@@ -271,7 +275,7 @@ void pattern3(Dictionary * dict, char * result) {
     char * nom2 = randomDerivation(dict, nom2d);
     char * nom3 = randomDerivation(dict, nom3d);
 
-    sprintf(result, "Albane %s Gabriel pendant que %s %s %s %s %s %s sans %s.", ver1, article(nom1d.number, nom1d.gender, nom1[0], false), nom1, ver2, adv, article(nom2d.number, nom2d.gender, nom2[0], false), nom2, nom3);
+    sprintf(result, "Albane %s Gabriel pendant que %s %s %s %s %s %s sans %s.", ver1, article(nom1d.number, nom1d.gender, nom1[0]), nom1, ver2, adv, article(nom2d.number, nom2d.gender, nom2[0]), nom2, nom3);
 }
 
 void splashscreen(Dictionary * dict, char * result) {
@@ -284,5 +288,6 @@ void splashscreen(Dictionary * dict, char * result) {
 
     adv[0] = adv[0] - 32;
 
-    sprintf(result, "%s %s ? %s.", article(nomd.number, nomd.gender, nom[0], true), nom, adv);
+    sprintf(result, "%s %s ? %s.", article(nomd.number, nomd.gender, nom[0]), nom, adv);
+    result[0] = result[0] - 32;
 }

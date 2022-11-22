@@ -14,12 +14,24 @@ Dictionary * createDictionary() {
     return dict;
 }
 
+void freeDictionary(Dictionary * dict) {
+    for(int i = 0; i < 4; i++) {
+        freeTree(dict->trees[i]);
+    }
+    free(dict);
+}
 
 Tree * createTree() {
     Tree * tree = malloc(sizeof(Tree));
     tree->root = createNode(' ');
     tree->size = 0;
     return tree;
+}
+
+// a recursive function to free a tree and all its nodes
+void freeTree(Tree * tree) {
+    freeNode(tree->root);
+    free(tree);
 }
 
 Node * createNode(char data) {
@@ -29,6 +41,23 @@ Node * createNode(char data) {
     node->derivatives = NULL;
     return node;
 }
+
+// a recursive function to free a node, its children and its derivatives
+void freeNode(Node * node) {
+    NodeList * children = node->children;
+    NodeCell * head = children->head;
+    while(head != NULL) {
+        NodeCell * next = head->next;
+        freeNode(head->node);
+        head = next;
+    }
+    freeNodelist(children);
+    if(node->derivatives != NULL) {
+        freeDerivativeList(node->derivatives);
+    }
+    free(node);
+}
+
 
 void addNode(Node * parent, Node * child) {
     NodeCell * cell = createNodecell(child);
