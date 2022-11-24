@@ -33,12 +33,8 @@ void banner() {
 
 void mainMenu() {
     // Dictionary * dict = initDict("dicts/dictionnaire_non_accentue.txt");
-    Dictionary * dict = initDict("dicts/dictionnaire.txt");
 
-    if(dict == NULL) {
-        printf("Erreur d'importation du dictionnaire\n");
-        exit(1);
-    }
+    Dictionary * dict = initDict("../dicts/dictionnaire.txt");
 
     banner();
     int seed = initRand();
