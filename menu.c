@@ -21,7 +21,7 @@ void banner() {
            "_/ __ \\\\  \\/  / ____/  |  \\  |/  ___/  \\   __\\  |  \\/  ___/                                   \n"
            "\\  ___/ >    < <_|  |  |  /  |\\___ \\|  ||  | |  |  /\\___ \\                                    \n"
            " \\___  >__/\\_ \\__   |____/|__/____  >__||__| |____//____  >                                   \n"
-           "     \\/      \\/  |__|             \\/                    \\/                                    \n"
+           "     \\/      \\/  |__|             \\/                    \\/                    processDerivative                \n"
            "                       ___          ___                .___                        .__        \n"
            "                      /  /   ____   \\  \\   _____     __| _/____ ___  __ ___________|__| ______\n"
            "                     /  /  _/ ___\\   \\  \\  \\__  \\   / __ |\\__  \\\\  \\/ // __ \\_  __ \\  |/  ___/\n"
@@ -33,6 +33,7 @@ void banner() {
 
 void mainMenu() {
     // Dictionary * dict = initDict("dicts/dictionnaire_non_accentue.txt");
+
     Dictionary * dict = initDict("../dicts/dictionnaire.txt");
 
     banner();
